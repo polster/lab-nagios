@@ -1,0 +1,16 @@
+# defines the IP and port to be used by the Vagrant Ansible provisioner for each host
+docker-node01-dev ansible_ssh_host=192.168.9.70 ansible_ssh_port=22
+nagios-client01-dev ansible_ssh_host=192.168.9.71 ansible_ssh_port=22
+
+[docker-nodes]
+docker-node01-dev
+
+[nagios-clients]
+nagios-client01
+docker-node01-dev
+
+[localhost]
+docker-node01-dev
+
+[all:vars]
+env=dev

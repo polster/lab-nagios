@@ -1,0 +1,5 @@
+- src: git+https://github.com/polster/ansible-nagios-nrpe.git
+  version: "v1.0.0"
+
+- src: git+https://github.com/polster/ansible-docker-node.git
+  version: "v1.0.0"

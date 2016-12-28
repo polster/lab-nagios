@@ -1,0 +1,26 @@
+---
+
+- hosts: all
+  become: True
+
+#- hosts: nagios-clients
+#  roles:
+#    - role: "ansible-nagios-nrpe"
+#      tags:
+#        - nagios
+#        - nrpe
+
+- hosts: docker-nodes
+  become: True
+  roles:
+    - role: "ansible-docker-node"
+      tags: docker
+
+- hosts: localhost
+  connection: local
+  tasks:
+    - docker_service:
+        project_name: "Nagios"
+        project_src: "./"
+        docker_host: "tcp://{{ lab_nagios_docker_host }}:{{ lab_nagios_docker_host_port }}"
+        state: present

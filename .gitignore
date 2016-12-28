@@ -1,0 +1,9 @@
+# Ansible
+roles
+*.retry
+
+# Vagrant
+.vagrant
+
+# Direnv
+.direnv

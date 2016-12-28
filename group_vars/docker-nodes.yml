@@ -1,0 +1,14 @@
+---
+
+lab_nagios_docker_host: "192.168.9.70"
+lab_nagios_docker_host_port: "4243"
+
+# The explicit Docker Server version
+ansible_docker_node_docker_version: "1.12.5"
+
+# Users to be allowed to manage Docker without sudo
+ansible_docker_node_docker_users:
+  - "vagrant"
+
+# Enable Docker daemon socket access over TCP/IP
+ansible_docker_node_docker_opts: "-H tcp://{{ lab_nagios_docker_host }}:{{ lab_nagios_docker_host_port }}"
