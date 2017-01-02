@@ -3,12 +3,18 @@
 - hosts: all
   become: True
 
-#- hosts: nagios-clients
-#  roles:
-#    - role: "ansible-nagios-nrpe"
-#      tags:
-#        - nagios
-#        - nrpe
+- hosts: nagios-clients
+  become: True
+  roles:
+    - role: "ansible-nagios-nrpe"
+      tags:
+        - nagios
+        - nrpe
+    - role: "ansible-nagios-plugins"
+      tags:
+        - nagios
+        - nrpe
+        - plugins
 
 - hosts: docker-nodes
   become: True

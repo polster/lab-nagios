@@ -1,0 +1,4 @@
+---
+
+# The host list including the Nagios server being allowed to call the NRPE agent
+ansible_nagios_nrpe_source_hosts: "127.0.0.1,192.168.9.70"
