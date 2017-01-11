@@ -2,16 +2,40 @@ SHELL=/bin/bash
 
 # the default provider
 PROVIDER=virtualbox
-VM_LIST=docker-node01-dev nagios-client01-dev
+DOCKER_NODE=docker-node01-dev
+DOCKER_NAGIOS=nagios
+DOCKER_NAGIOS_VOLUME=labnagios_nagios_data
 
-up:
-	time vagrant up --provider $(PROVIDER)
+docker-compose-up:
+	docker-compose up -d
 
-provision:
-	time vagrant provision
+docker-deploy-nagios-config:
+	@echo "----------------------"
+	@echo "Copy Nagios config to ${DOCKER_NODE}"
+	docker cp ./nagios-config/etc/objects/custom ${DOCKER_NAGIOS}:/usr/local/nagios/etc/objects/
+	docker cp ./nagios-config/etc/nagios.cfg ${DOCKER_NAGIOS}:/usr/local/nagios/etc/nagios.cfg
+	@echo "----------------------"
+	@echo "Verify Nagios config"
+	docker exec ${DOCKER_NAGIOS} /usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
+	@echo "----------------------"
+	@echo "Make the changes productive"
+	docker restart ${DOCKER_NAGIOS}
 
-destroy:
-	time vagrant destroy ${VM_LIST}
+docker-destroy:
+	docker stop ${DOCKER_NAGIOS} && docker rm ${DOCKER_NAGIOS}
+	docker volume rm ${DOCKER_NAGIOS_VOLUME}
+
+docker-status:
+	docker ps -a
+
+vagrant-up:
+	vagrant up --provider $(PROVIDER)
+
+vagrant-provision:
+	vagrant provision
+
+vagrant-destroy:
+	vagrant destroy
 
 status:
 	@echo "---------------------------"
@@ -35,5 +59,13 @@ dependencies-ansible-galaxy:
 	rm -rf roles/*
 	ansible-galaxy install -f -r requirements.yml -p roles
 
+dependencies-vagrant:
+	@echo "Installing Vagrant dependencies"
+	vagrant plugin install vagrant-hostsupdater
+
 # Declare commands to be not associated with files
-.PHONY: up provision destroy dependencies dependencies-ansible-docker dependencies-ansible-galaxy
+.PHONY: status \
+	vagrant-up vagrant-provision vagrant-destroy \
+	dependencies dependencies-vagrant dependencies-ansible-galaxy dependencies-ansible-docker \
+	dependencies-ansible-docker dependencies-ansible-galaxy \
+	docker-compose-up docker-destroy docker-deploy-nagios-config
