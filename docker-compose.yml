@@ -4,16 +4,10 @@ services:
   nagios:
     image: polster/docker-nagios:latest
     container_name: nagios
-    volumes_from:
-      - nagios-data
+    volumes:
+      - nagios_data:/usr/local/nagios
     ports:
       - "8090:80"
-  nagios-data:
-    image: polster/docker-nagios:latest
-    container_name: nagios-data
-    volumes:
-      - /usr/local/nagios
-    entrypoint: /bin/bash
 
 volumes:
-    nagios-data:
+  nagios_data:
