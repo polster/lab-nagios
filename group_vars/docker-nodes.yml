@@ -10,5 +10,10 @@ ansible_docker_node_docker_version: "1.12.5"
 ansible_docker_node_docker_users:
   - "vagrant"
 
+# The host list including the Nagios server being allowed to call the NRPE agent,
+# also including the Nagios Docker container static IP to be allowed to check
+# the Docker host
+ansible_nagios_nrpe_source_hosts: "127.0.0.1,192.168.9.70,10.5.0.10"
+
 # Enable Docker daemon socket access over TCP/IP
 ansible_docker_node_docker_opts: "-H tcp://{{ lab_nagios_docker_host }}:{{ lab_nagios_docker_host_port }}"

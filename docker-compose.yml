@@ -8,6 +8,17 @@ services:
       - nagios_data:/usr/local/nagios
     ports:
       - "8090:80"
+    networks:
+      nagios_net:
+        ipv4_address: 10.5.0.10
 
 volumes:
   nagios_data:
+
+networks:
+  nagios_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1
