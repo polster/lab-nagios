@@ -13,6 +13,7 @@ docker-deploy-nagios-config:
 	@echo "----------------------"
 	@echo "Copy Nagios config to ${DOCKER_NODE}"
 	docker cp ./nagios-config/etc/objects/custom ${DOCKER_NAGIOS}:/usr/local/nagios/etc/objects/
+	docker cp ./nagios-config/etc/objects/localhost.cfg ${DOCKER_NAGIOS}:/usr/local/nagios/etc/objects/
 	docker cp ./nagios-config/etc/nagios.cfg ${DOCKER_NAGIOS}:/usr/local/nagios/etc/nagios.cfg
 	@echo "----------------------"
 	@echo "Verify Nagios config"
