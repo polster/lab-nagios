@@ -2,7 +2,7 @@ version: '2'
 
 services:
   nagios:
-    image: polster/docker-nagios:latest
+    build: nagios
     container_name: nagios
     volumes:
       - nagios_data:/usr/local/nagios

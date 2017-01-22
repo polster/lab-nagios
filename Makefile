@@ -7,7 +7,7 @@ DOCKER_NAGIOS=nagios
 DOCKER_NAGIOS_VOLUME=labnagios_nagios_data
 
 docker-compose-up:
-	docker-compose up -d
+	docker-compose up -d --build
 
 docker-deploy-nagios-config:
 	@echo "----------------------"
