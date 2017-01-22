@@ -5,6 +5,7 @@ PROVIDER=virtualbox
 DOCKER_NODE=docker-node01-dev
 DOCKER_NAGIOS=nagios
 DOCKER_NAGIOS_VOLUME=labnagios_nagios_data
+DOCKER_NAGIOS_NETWORK=labnagios_nagios_net
 
 docker-compose-up:
 	docker-compose up -d --build
@@ -25,6 +26,7 @@ docker-deploy-nagios-config:
 docker-destroy:
 	docker stop ${DOCKER_NAGIOS} && docker rm ${DOCKER_NAGIOS}
 	docker volume rm ${DOCKER_NAGIOS_VOLUME}
+	docker network rm ${DOCKER_NAGIOS_NETWORK}
 
 docker-status:
 	docker ps -a
